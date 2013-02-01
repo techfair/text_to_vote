@@ -1,6 +1,6 @@
 from flask import Flask, request, redirect, render_template
 import twilio.twiml
-#from flaskext.mysql import MySQL
+from werkzeug.contrib.fixers import ProxyFix
 import MySQLdb 
 import MySQLdb.cursors
  
@@ -8,9 +8,6 @@ app = Flask(__name__)
 app.config.from_object('config')
 
 myDb = MySQLdb.connect(host=app.config['MYSQL_DATABASE_HOST'], user=app.config['MYSQL_DATABASE_USER'], passwd=app.config['MYSQL_DATABASE_PASSWORD'], db=app.config['MYSQL_DATABASE_DB'], cursorclass=MySQLdb.cursors.DictCursor)
-
-#mysql = MySQL()
-#mysql.init_app(app)
 
 @app.route("/", methods=['GET'])
 def index():
@@ -22,7 +19,7 @@ def index():
     
     return render_template('index.html', teams=cursor)
 
-@app.route("/vote", methods=['GET', 'POST'])
+@app.route("/vote", methods=['GET'])
 def vote():
     cursor = myDb.cursor()
 
@@ -35,7 +32,6 @@ def vote():
 
     #cast vote
     vote_id = request.values.get('Body', None)
-
     cursor.execute('select * from teams13 where vote_id=' + vote_id)
     team = cursor.fetchone()
 
@@ -53,5 +49,7 @@ def vote():
 
     return message
 
+
+app.wsgi_app = ProxyFix(app.wsgi_app)
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
