@@ -44,12 +44,16 @@ def vote():
     else:
         message = "Not a valid vote."
  
+    print "whatt's wrong"
     resp = twilio.twiml.Response()
+    print twilio
+    print twilio.twiml
+    print resp
     resp.sms(message)
 
-    return message
+    return str(resp)
 
 
 app.wsgi_app = ProxyFix(app.wsgi_app)
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)

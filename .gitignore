@@ -3,3 +3,5 @@ config.py
 venv
 *.pyc
 logs
+build
+
