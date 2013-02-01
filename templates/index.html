@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="static/favicon.png" />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:500,400,300' rel='stylesheet' />
+    <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="static/css/style.css" />
+  </head>
+
+  <body>
+
+    <p> Text the Vote ID of your favorite team to <strong>(440) 373-4897</strong>! </p>
+
+    <table class="table center-table">
+      <thead>
+        <tr>
+          <th>Vote ID</th>
+          <th>Team Name</th>
+          <th>Total Votes</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for team in teams %}
+        <tr> 
+          <td>{{team.vote_id}}</td>
+          <td>{{team.team_name}}</td>
+          <td>{{team.votes}}</td>
+        </tr>             
+      {% endfor %}
+      </tbody>
+    </table> 
+
+  </body>
