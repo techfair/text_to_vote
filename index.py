@@ -3,6 +3,7 @@ import twilio.twiml
 from werkzeug.contrib.fixers import ProxyFix
 import MySQLdb 
 import MySQLdb.cursors
+import json
  
 app = Flask(__name__)
 app.config.from_object('config')
@@ -14,7 +15,6 @@ def index():
     cursor = myDb.cursor()
     cursor.execute('select * from teams13')
     for team in cursor:
-        print team
         print team['vote_id'], team['team_name'], team['votes']
     
     return render_template('index.html', teams=cursor)
@@ -44,14 +44,19 @@ def vote():
     else:
         message = "Not a valid vote."
  
-    print "whatt's wrong"
     resp = twilio.twiml.Response()
-    print twilio
-    print twilio.twiml
-    print resp
     resp.sms(message)
 
     return str(resp)
+
+@app.route("/get_json", methods=['GET'])
+def get_json():
+    cursor = myDb.cursor()
+    cursor.execute('select * from teams13')
+    results = {}
+    for team in cursor:
+        results[team['vote_id']] = team
+    return json.dumps(results, sort_keys=True, indent=4, separators=(',', ': '))
 
 
 app.wsgi_app = ProxyFix(app.wsgi_app)

@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="static/favicon.png" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+    <script type="text/javascript" src="static/js/update.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:500,400,300' rel='stylesheet' />
     <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="static/css/style.css" />
@@ -24,9 +25,9 @@
       <tbody>
       {% for team in teams %}
         <tr> 
-          <td>{{team.vote_id}}</td>
-          <td>{{team.team_name}}</td>
-          <td>{{team.votes}}</td>
+          <td id="id_{{team.vote_id}}">{{team.vote_id}}</td>
+          <td id="name_{{team.vote_id}}">{{team.team_name}}</td>
+          <td id="votes_{{team.vote_id}}">{{team.votes}}</td>
         </tr>             
       {% endfor %}
       </tbody>
