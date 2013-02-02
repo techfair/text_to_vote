@@ -25,6 +25,9 @@ def vote():
 
     #prevent from voting twice
     from_number = request.values.get('From', None)
+    if not from_number:
+        return "No number."
+
     cursor.execute('select * from phone_numbers13 where phone_number=%s', from_number)
     number = cursor.fetchone()
     if number:
@@ -32,6 +35,8 @@ def vote():
 
     #cast vote
     vote_id = request.values.get('Body', None)
+    if not vote_id:
+        return "No vote id."
     cursor.execute('select * from teams13 where vote_id=%s', vote_id)
     team = cursor.fetchone()
 
