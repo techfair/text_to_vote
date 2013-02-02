@@ -25,6 +25,8 @@ def vote():
 
     #prevent from voting twice
     from_number = request.values.get('From', None)
+    if not from_number:
+        return "No number."
     cursor.execute('select * from phone_numbers13 where phone_number=' + from_number)
     number = cursor.fetchone()
     if number:
