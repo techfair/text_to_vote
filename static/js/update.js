@@ -6,10 +6,11 @@ function updateValues() {
         for (var vote_id in json){
             console.log(json[vote_id]['votes'].toString());
             $('#votes_'+vote_id.toString()).html(json[vote_id]['votes'].toString());
-        }   
+
+        } 
+        setTimeout(updateValues, 2000); 
     }
   });
-  setTimeout(updateValues, 2000); 
 }
 
 $(document).ready(function() {
