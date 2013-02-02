@@ -34,6 +34,8 @@ def vote():
 
     #cast vote
     vote_id = request.values.get('Body', None)
+    if not vote_id:
+        return "No vote id."
     cursor.execute('select * from teams13 where vote_id=' + vote_id)
     team = cursor.fetchone()
 
