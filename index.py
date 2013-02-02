@@ -25,20 +25,24 @@ def vote():
 
     #prevent from voting twice
     from_number = request.values.get('From', None)
-    cursor.execute('select * from phone_numbers13 where phone_number=' + from_number)
+    cursor.execute('select * from phone_numbers13 where phone_number=%s', from_number)
     number = cursor.fetchone()
     if number:
         return "You already voted." #don't waste a text here
 
     #cast vote
     vote_id = request.values.get('Body', None)
-    cursor.execute('select * from teams13 where vote_id=' + vote_id)
+    cursor.execute('select * from teams13 where vote_id=%s', vote_id)
     team = cursor.fetchone()
 
     if team:
         message = "Your vote for " + team['team_name'] + " has been tallied!"
-        cursor.execute( 'update teams13 set votes=' + str((team['votes']+1)) + ' where vote_id=' + str(team['vote_id']) )
-        query = 'insert into phone_numbers13 values(' + "\'" + from_number + "\'" + ')' 
+
+        query = 'update teams13 set votes=%s where vote_id=%s' % (str(team['votes']+1), str(team['vote_id']))
+        print query
+        cursor.execute(query)
+
+        query = 'insert into phone_numbers13 values(\'%s\')' % from_number
         print query
         cursor.execute(query)
     else:
