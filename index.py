@@ -14,8 +14,8 @@ myDb = MySQLdb.connect(host=app.config['MYSQL_DATABASE_HOST'], user=app.config['
 def index():
     cursor = myDb.cursor()
     cursor.execute('select * from teams13')
-    for team in cursor:
-        print team['vote_id'], team['team_name'], team['votes']
+    #for team in cursor:
+        #print team['vote_id'], team['team_name'], team['votes']
     
     return render_template('index.html', teams=cursor)
 
@@ -44,11 +44,11 @@ def vote():
         message = "Your vote for " + team['team_name'] + " has been tallied!"
 
         query = 'update teams13 set votes=%s where vote_id=%s' % (str(team['votes']+1), str(team['vote_id']))
-        print query
+        #print query
         cursor.execute(query)
 
         query = 'insert into phone_numbers13 values(\'%s\')' % from_number
-        print query
+        #print query
         cursor.execute(query)
     else:
         message = "Not a valid vote."
